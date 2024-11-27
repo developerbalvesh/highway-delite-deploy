@@ -4,7 +4,10 @@ export const requireSignIn = async (req, res, next) => {
     try {
         const secret = process.env.JWT_SECRET;
         if (!secret) {
-            return req.user_id = null;
+            return res.status(200).send({
+                success:false,
+                message:"Secret not found"
+            });
         }
         const decode = JWT.verify(req.headers.authorization, secret);
         if (!decode) {
